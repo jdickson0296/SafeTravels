@@ -4,39 +4,55 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/enter_stegan_r"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:text="Enter Stegan Key" />
+
+    <EditText
+        android:id="@+id/stegan_key_r"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/enter_aes_r"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:text="Enter AES Key" />
+
+    <EditText
+        android:id="@+id/aes_key_r"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textPassword" />
+
     <Button
         android:id="@+id/select_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
         android:text="Select File"
         tools:layout_editor_absoluteX="159dp"
         tools:layout_editor_absoluteY="93dp" />
-
-    <Button
-        android:id="@+id/stegan_button_r"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="Stegan Key"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="230dp" />
-
-    <Button
-        android:id="@+id/aes_button_r"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="AES Key"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="362dp" />
 
     <Button
         android:id="@+id/decrypt_button"

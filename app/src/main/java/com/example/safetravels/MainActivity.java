@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Initialze the buttons
+    // Initialize the buttons
     Button sendDataButton;
     Button receieveDataButton;
 
