@@ -1,11 +1,21 @@
 package com.example.safetravels;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 public class ReceiverActivity extends AppCompatActivity {
 
@@ -21,6 +31,12 @@ public class ReceiverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receiver1);
+
+        // Request permission access
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
+        }
 
         // This finds your button on the activity
         select = (Button) findViewById(R.id.select_button);
@@ -40,6 +56,11 @@ public class ReceiverActivity extends AppCompatActivity {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new MaterialFilePicker()
+                        .withActivity(ReceiverActivity.this)
+                        .withRequestCode(1000)
+                        .withHiddenFiles(true) // Show hidden files and folders
+                        .start();
 
             }
         });
@@ -50,9 +71,40 @@ public class ReceiverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+//                AESDecrypt.Decrypt("encryptedfile.des", "txt", password);
+
             }
         });
 
-
     }
+
+    // Navigating through phones files
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
+            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            // Do anything with file
+            System.out.println(filePath);
+        }
+    }
+
+    // Sends alert for permission to go through files
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1001: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(ReceiverActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(ReceiverActivity.this, "Permission not granted", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }
+    }
+
 }

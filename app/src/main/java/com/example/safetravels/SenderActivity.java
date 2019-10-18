@@ -76,8 +76,7 @@ public class SenderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
+//                AESEncrypt.Encrypt("plainfile.txt", password);
             }
         });
 
