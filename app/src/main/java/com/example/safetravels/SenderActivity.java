@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
 
-
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
@@ -30,6 +29,8 @@ public class SenderActivity extends AppCompatActivity {
     Button Encrypt;
     Button upload;
     Button select_s;
+
+    public static String filename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +53,10 @@ public class SenderActivity extends AppCompatActivity {
 
 
         // get the aes key from the text box
-        String AES_key_s = String.valueOf(AES_key_text_S.getText());
+        final String AES_key_s = String.valueOf(AES_key_text_S.getText());
 
         // get the stegan key from the text box
         String stegan_key_s = String.valueOf(Stegan_key_text_S.getText());
-
 
         // function for when select is clicked
         select_s.setOnClickListener(new View.OnClickListener() {
@@ -70,13 +70,12 @@ public class SenderActivity extends AppCompatActivity {
             }
         });
 
-
         // function for when encrypt is clicked
         Encrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                AESEncrypt.Encrypt("plainfile.txt", password);
+//                AESEncrypt.Encrypt(filename, AES_key_s);
             }
         });
 
@@ -95,10 +94,14 @@ public class SenderActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
             // Do anything with file
-            System.out.println(filePath);
+            String[] arrayPath = filePath.split("/",9);
+            filename = arrayPath[arrayPath.length-1];
+            System.out.println(filename);
+
         }
     }
 

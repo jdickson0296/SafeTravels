@@ -27,6 +27,8 @@ public class ReceiverActivity extends AppCompatActivity {
     EditText AES_key_text_R;
     Button decrypt;
 
+    public static String filename;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class ReceiverActivity extends AppCompatActivity {
         decrypt = (Button) findViewById(R.id.decrypt_button);
 
         // get the aes key from the text box
-        String AES_key_r = String.valueOf(AES_key_text_R.getText());
+        final String AES_key_r = String.valueOf(AES_key_text_R.getText());
 
         // get the stegan key from the text box
         String stegan_key_r = String.valueOf(Stegan_key_text_R.getText());
@@ -71,11 +73,11 @@ public class ReceiverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                AESDecrypt.Decrypt("encryptedfile.des", "txt", password);
+//                AESDecrypt.Decrypt("encryptedfile.des", "txt", AES_key_r);
+
 
             }
         });
-
     }
 
     // Navigating through phones files
@@ -85,8 +87,9 @@ public class ReceiverActivity extends AppCompatActivity {
 
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            // Do anything with file
-            System.out.println(filePath);
+            String[] arrayPath = filePath.split("/",9);
+            filename = arrayPath[arrayPath.length-1];
+
         }
     }
 
