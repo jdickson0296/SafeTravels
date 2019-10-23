@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Safe Travels</string>
+
+    <string name="format_prompt">Choose format to decrypt file in</string>
+
+    <string-array name="format_arrays">
+        <item>.pdf</item>
+        <item>.docx</item>
+        <item>.doc</item>
+        <item>.txt</item>
+        <item>.log</item>
+        <item>.csv</item>
+        <item>.ppt</item>
+        <item>.jpg</item>
+        <item>.png</item>
+    </string-array>
 </resources>

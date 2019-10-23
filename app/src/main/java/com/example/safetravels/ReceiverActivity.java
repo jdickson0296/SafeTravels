@@ -9,10 +9,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
@@ -26,8 +28,10 @@ public class ReceiverActivity extends AppCompatActivity {
     EditText Stegan_key_text_R;
     EditText AES_key_text_R;
     Button decrypt;
+    Spinner spinner1;
 
     public static String filename;
+    public static String extension_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class ReceiverActivity extends AppCompatActivity {
         enter_stegan_r = (TextView) findViewById(R.id.enter_stegan_r);
         enter_aes_r = (TextView) findViewById(R.id.enter_aes_r);
         decrypt = (Button) findViewById(R.id.decrypt_button);
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
 
         // get the aes key from the text box
         final String AES_key_r = String.valueOf(AES_key_text_R.getText());
@@ -68,13 +73,22 @@ public class ReceiverActivity extends AppCompatActivity {
         });
 
 
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                extension_text = spinner1.getSelectedItem().toString();
+                System.out.println(extension_text);
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
         // function for when decrypt is clicked
         decrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                AESDecrypt.Decrypt("encryptedfile.des", "txt", AES_key_r);
-
+//                AESDecrypt.Decrypt("encryptedfile.des", extension_text, AES_key_r);
 
             }
         });

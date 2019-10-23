@@ -50,7 +50,7 @@ public class AESDecrypt {
             cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(iv));
             FileInputStream fis = new FileInputStream(des_file);
 
-            FileOutputStream fos = new FileOutputStream("decrypted_file." + file_format);
+            FileOutputStream fos = new FileOutputStream("decrypted_file" + file_format);
             byte[] in = new byte[64];
             int read;
             while ((read = fis.read(in)) != -1) {
