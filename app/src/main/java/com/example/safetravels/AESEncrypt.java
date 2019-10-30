@@ -1,5 +1,8 @@
 package com.example.safetravels;
 
+import android.content.Context;
+//import android.os.Environment;
+//import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.AlgorithmParameters;
@@ -14,13 +17,15 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AESEncrypt {
 
-    static void Encrypt(String filename, String password) throws Exception {
+    static void Encrypt(String filename, String password, Context ctx) throws Exception {
 
         // file to be encrypted
         FileInputStream inFile = new FileInputStream(filename);
 
         // encrypted file
-        FileOutputStream outFile = new FileOutputStream("encryptedfile.des");
+        FileOutputStream outFile;
+        outFile = ctx.openFileOutput("encryptedfile.des", Context.MODE_PRIVATE);
+//        outFile = new FileOutputStream("encryptedfile.des");
 
         // password, iv and salt should be transferred to the other end
         // in a secure manner
@@ -32,14 +37,14 @@ public class AESEncrypt {
         byte[] salt = new byte[8];
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(salt);
-        FileOutputStream saltOutFile = new FileOutputStream("salt.enc");
+        FileOutputStream saltOutFile;
+        saltOutFile = ctx.openFileOutput("salt.enc", Context.MODE_PRIVATE);
+//        saltOutFile = new FileOutputStream("salt.enc");
         saltOutFile.write(salt);
         saltOutFile.close();
 
-        SecretKeyFactory factory = SecretKeyFactory
-                .getInstance("PBKDF2WithHmacSHA1");
-        KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536,
-                256);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
         SecretKey secretKey = factory.generateSecret(keySpec);
         SecretKey secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
 
@@ -52,7 +57,9 @@ public class AESEncrypt {
         // secure
         // used while initializing the cipher
         // file to store the iv
-        FileOutputStream ivOutFile = new FileOutputStream("iv.enc");
+        FileOutputStream ivOutFile;
+        ivOutFile = ctx.openFileOutput("iv.enc", Context.MODE_PRIVATE);
+//        ivOutFile= new FileOutputStream("iv.enc");
         byte[] iv = params.getParameterSpec(IvParameterSpec.class).getIV();
         ivOutFile.write(iv);
         ivOutFile.close();

@@ -2,7 +2,6 @@ package com.example.safetravels;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Spinner;
-
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
@@ -88,7 +86,11 @@ public class ReceiverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                AESDecrypt.Decrypt("encryptedfile.des", extension_text, AES_key_r);
+                try {
+                    AESDecrypt.Decrypt(extension_text, AES_key_r);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         });

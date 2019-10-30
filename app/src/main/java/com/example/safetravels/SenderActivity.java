@@ -2,7 +2,6 @@ package com.example.safetravels;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
-import java.util.regex.Pattern;
+//import java.util.regex.Pattern;
 
 public class SenderActivity extends AppCompatActivity {
 
@@ -52,9 +51,6 @@ public class SenderActivity extends AppCompatActivity {
         select_s =(Button) findViewById(R.id.select_button_s);
 
 
-        // get the aes key from the text box
-        final String AES_key_s = String.valueOf(AES_key_text_S.getText());
-
         // get the stegan key from the text box
         String stegan_key_s = String.valueOf(Stegan_key_text_S.getText());
 
@@ -74,8 +70,14 @@ public class SenderActivity extends AppCompatActivity {
         Encrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // get the aes key from the text box
+                final String AES_key_s = String.valueOf(AES_key_text_S.getText());
 
-//                AESEncrypt.Encrypt(filename, AES_key_s);
+                try {
+                    AESEncrypt.Encrypt(filename, AES_key_s, SenderActivity.this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -96,10 +98,10 @@ public class SenderActivity extends AppCompatActivity {
 
 
         if (requestCode == 1000 && resultCode == RESULT_OK) {
-            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            filename = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
             // Do anything with file
-            String[] arrayPath = filePath.split("/",9);
-            filename = arrayPath[arrayPath.length-1];
+//            String[] arrayPath = filePath.split("/",9);
+//            filename = arrayPath[arrayPath.length-1];
             System.out.println(filename);
 
         }

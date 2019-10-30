@@ -1,5 +1,7 @@
 package com.example.safetravels;
 
+import android.content.Context;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,7 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AESDecrypt {
 
-    static void Decrypt(String des_file, String file_format, String password) throws Exception {
+    static void Decrypt(String file_format, String password, Context ctx) throws Exception {
 
         try {
             // reading the salt
@@ -28,7 +30,6 @@ public class AESDecrypt {
 //           new File("salt.enc").delete();
 
 
-
             // reading the iv
             FileInputStream ivFis = new FileInputStream("iv.enc");
             byte[] iv = new byte[16];
@@ -38,19 +39,19 @@ public class AESDecrypt {
 //           new File("iv.enc").delete();
 
 
-            SecretKeyFactory factory = SecretKeyFactory
-                    .getInstance("PBKDF2WithHmacSHA1");
-            KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536,
-                    256);
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
             SecretKey tmp = factory.generateSecret(keySpec);
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
 
             // file decryption
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(iv));
-            FileInputStream fis = new FileInputStream(des_file);
+            FileInputStream fis = new FileInputStream("encryptedfile.des");
 
-            FileOutputStream fos = new FileOutputStream("decrypted_file" + file_format);
+            FileOutputStream fos;
+            fos = ctx.openFileOutput("decrypted_file" + file_format, Context.MODE_PRIVATE);
+//            fos = new FileOutputStream("decrypted_file" + file_format);
             byte[] in = new byte[64];
             int read;
             while ((read = fis.read(in)) != -1) {
