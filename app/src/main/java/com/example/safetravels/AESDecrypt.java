@@ -6,9 +6,11 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
@@ -17,7 +19,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AESDecrypt {
 
-    static void Decrypt(String file_format, String password, Context ctx) throws Exception {
+    static void Decrypt(String file_format, String file_encrypted, String password, Context ctx) throws Exception {
 
         try {
             // reading the salt
@@ -29,9 +31,8 @@ public class AESDecrypt {
             byte[] salt = new byte[8];
             saltFis.read(salt);
             saltFis.close();
-//           // delete enc file
-//           new File("salt.enc").delete();
-
+            // delete enc file
+//            boolean deleted_s = file_s.delete();
 
             // reading the iv
             File file_i = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "iv.enc");
@@ -39,9 +40,8 @@ public class AESDecrypt {
             byte[] iv = new byte[16];
             ivFis.read(iv);
             ivFis.close();
-//           // delete enc file
-//           new File("iv.enc").delete();
-
+            // delete enc file
+//            boolean deleted_i = file_i.delete();
 
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
@@ -51,8 +51,10 @@ public class AESDecrypt {
             // file decryption
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(iv));
-            File file_e = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "encryptedfile.des");
-            FileInputStream fis = new FileInputStream(file_e);
+//            File file_e = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "encryptedfile.des");
+            FileInputStream fis = new FileInputStream(file_encrypted);
+            // delete des file
+//            boolean deleted_d = file_e.delete();
 
             FileOutputStream fos;
             File decryptfile = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "decrypted_file");
@@ -76,10 +78,22 @@ public class AESDecrypt {
 //           new File("encryptedfile.des").delete();
             String mydecPath = path + "decrypted_file" + file_format;
             Toast.makeText(ctx, "Decrypted to " + mydecPath, Toast.LENGTH_LONG).show();
-        }
 
-        catch (BadPaddingException e) {
-            Toast.makeText(ctx, "Incorrect key used for decryption", Toast.LENGTH_LONG).show();
+            // Error handling for user to see
+        } catch(Exception e) {
+            e.printStackTrace();
+            // Notifies user that the incorrect key was used for decryption
+            if (e instanceof BadPaddingException)
+                Toast.makeText(ctx, "Incorrect key used for decryption", Toast.LENGTH_LONG).show();
+            // Notifies user that the wrong file was selected
+            if (e instanceof IllegalBlockSizeException)
+                Toast.makeText(ctx, "Incorrect file selected", Toast.LENGTH_LONG).show();
+            // Notifies user that they did not enter a key
+            if (e instanceof InvalidKeySpecException)
+                Toast.makeText(ctx, "Password key was not entered ", Toast.LENGTH_LONG).show();
+            // Notifies user that a incorrect file was used or file was not selected
+//            else
+//                Toast.makeText(ctx, "Incorrect file for decryption ", Toast.LENGTH_LONG).show();
         }
     }
 }

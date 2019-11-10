@@ -87,7 +87,7 @@ public class ReceiverActivity extends AppCompatActivity {
                 final String AES_key_r = String.valueOf(AES_key_text_R.getText());
 
                 try {
-                    AESDecrypt.Decrypt(extension_text, AES_key_r, ReceiverActivity.this);
+                    AESDecrypt.Decrypt(extension_text, filename, AES_key_r, ReceiverActivity.this);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -102,10 +102,8 @@ public class ReceiverActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1000 && resultCode == RESULT_OK) {
-            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            String[] arrayPath = filePath.split("/",9);
-            filename = arrayPath[arrayPath.length-1];
-
+            filename = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            System.out.println(filename);
         }
     }
 
