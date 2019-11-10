@@ -12,11 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
-
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
-
-//import java.util.regex.Pattern;
 
 public class SenderActivity extends AppCompatActivity {
 
@@ -99,9 +96,6 @@ public class SenderActivity extends AppCompatActivity {
 
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             filename = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            // Do anything with file
-//            String[] arrayPath = filePath.split("/",9);
-//            filename = arrayPath[arrayPath.length-1];
             System.out.println(filename);
 
         }

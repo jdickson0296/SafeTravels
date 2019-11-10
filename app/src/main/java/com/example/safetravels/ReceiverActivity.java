@@ -51,8 +51,6 @@ public class ReceiverActivity extends AppCompatActivity {
         decrypt = (Button) findViewById(R.id.decrypt_button);
         spinner1 = (Spinner) findViewById(R.id.spinner1);
 
-        // get the aes key from the text box
-        final String AES_key_r = String.valueOf(AES_key_text_R.getText());
 
         // get the stegan key from the text box
         String stegan_key_r = String.valueOf(Stegan_key_text_R.getText());
@@ -74,7 +72,6 @@ public class ReceiverActivity extends AppCompatActivity {
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 extension_text = spinner1.getSelectedItem().toString();
-                System.out.println(extension_text);
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -86,8 +83,11 @@ public class ReceiverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // get the aes key from the text box
+                final String AES_key_r = String.valueOf(AES_key_text_R.getText());
+
                 try {
-                    AESDecrypt.Decrypt(extension_text, AES_key_r);
+                    AESDecrypt.Decrypt(extension_text, AES_key_r, ReceiverActivity.this);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -1,8 +1,9 @@
 package com.example.safetravels;
 
 import android.content.Context;
-//import android.os.Environment;
-//import java.io.File;
+import android.os.Environment;
+import android.widget.Toast;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.AlgorithmParameters;
@@ -21,11 +22,10 @@ public class AESEncrypt {
 
         // file to be encrypted
         FileInputStream inFile = new FileInputStream(filename);
-
         // encrypted file
         FileOutputStream outFile;
-        outFile = ctx.openFileOutput("encryptedfile.des", Context.MODE_PRIVATE);
-//        outFile = new FileOutputStream("encryptedfile.des");
+        File file_e = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "encryptedfile.des");
+        outFile = new FileOutputStream(file_e);
 
         // password, iv and salt should be transferred to the other end
         // in a secure manner
@@ -38,8 +38,8 @@ public class AESEncrypt {
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(salt);
         FileOutputStream saltOutFile;
-        saltOutFile = ctx.openFileOutput("salt.enc", Context.MODE_PRIVATE);
-//        saltOutFile = new FileOutputStream("salt.enc");
+        File file_s = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "salt.enc");
+        saltOutFile = new FileOutputStream(file_s);
         saltOutFile.write(salt);
         saltOutFile.close();
 
@@ -58,8 +58,8 @@ public class AESEncrypt {
         // used while initializing the cipher
         // file to store the iv
         FileOutputStream ivOutFile;
-        ivOutFile = ctx.openFileOutput("iv.enc", Context.MODE_PRIVATE);
-//        ivOutFile= new FileOutputStream("iv.enc");
+        File file_i = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "iv.enc");
+        ivOutFile= new FileOutputStream(file_i);
         byte[] iv = params.getParameterSpec(IvParameterSpec.class).getIV();
         ivOutFile.write(iv);
         ivOutFile.close();
@@ -77,12 +77,16 @@ public class AESEncrypt {
         byte[] output = cipher.doFinal();
         if (output != null)
             outFile.write(output);
+        else
+            Toast.makeText(ctx, "File already exists ", Toast.LENGTH_LONG).show();
 
         inFile.close();
         outFile.flush();
         outFile.close();
+        String path = Environment.getExternalStorageDirectory().getPath();
+        String myencPath = path + "encryptedfile.des";
+        Toast.makeText(ctx, "Saved to " + myencPath, Toast.LENGTH_LONG).show();
 
-        System.out.println("File Encrypted");
 
     }
 }

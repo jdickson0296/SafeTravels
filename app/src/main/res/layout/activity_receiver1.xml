@@ -5,27 +5,6 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/enter_stegan_r"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_horizontal"
-        android:text="Enter Stegan Key"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/stegan_key_r"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:inputType="textPassword" />
-
-    <TextView
         android:id="@+id/enter_aes_r"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,6 +18,27 @@
 
     <EditText
         android:id="@+id/aes_key_r"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/enter_stegan_r"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:text="Enter Stegan Key"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/stegan_key_r"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

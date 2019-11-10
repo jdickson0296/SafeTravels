@@ -1,7 +1,8 @@
 package com.example.safetravels;
 
 import android.content.Context;
-
+import android.os.Environment;
+import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +23,9 @@ public class AESDecrypt {
             // reading the salt
             // user should have secure mechanism to transfer the
             // salt, iv and password to the recipient
-            FileInputStream saltFis = new FileInputStream("salt.enc");
+            String path = ctx.getFilesDir().getAbsolutePath();
+            File file_s = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "salt.enc");
+            FileInputStream saltFis = new FileInputStream(file_s);
             byte[] salt = new byte[8];
             saltFis.read(salt);
             saltFis.close();
@@ -31,7 +34,8 @@ public class AESDecrypt {
 
 
             // reading the iv
-            FileInputStream ivFis = new FileInputStream("iv.enc");
+            File file_i = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "iv.enc");
+            FileInputStream ivFis = new FileInputStream(file_i);
             byte[] iv = new byte[16];
             ivFis.read(iv);
             ivFis.close();
@@ -47,11 +51,12 @@ public class AESDecrypt {
             // file decryption
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(iv));
-            FileInputStream fis = new FileInputStream("encryptedfile.des");
+            File file_e = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "encryptedfile.des");
+            FileInputStream fis = new FileInputStream(file_e);
 
             FileOutputStream fos;
-            fos = ctx.openFileOutput("decrypted_file" + file_format, Context.MODE_PRIVATE);
-//            fos = new FileOutputStream("decrypted_file" + file_format);
+            File decryptfile = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "decrypted_file");
+            fos = new FileOutputStream(decryptfile + file_format);
             byte[] in = new byte[64];
             int read;
             while ((read = fis.read(in)) != -1) {
@@ -69,12 +74,12 @@ public class AESDecrypt {
 
 //           // delete encrypted file
 //           new File("encryptedfile.des").delete();
-
-            System.out.println("File Decrypted");
+            String mydecPath = path + "decrypted_file" + file_format;
+            Toast.makeText(ctx, "Decrypted to " + mydecPath, Toast.LENGTH_LONG).show();
         }
 
         catch (BadPaddingException e) {
-            System.out.println("Incorrect key used for decryption");
+            Toast.makeText(ctx, "Incorrect key used for decryption", Toast.LENGTH_LONG).show();
         }
     }
 }
