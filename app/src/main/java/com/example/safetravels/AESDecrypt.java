@@ -31,8 +31,6 @@ public class AESDecrypt {
             byte[] salt = new byte[8];
             saltFis.read(salt);
             saltFis.close();
-            // delete enc file
-//            boolean deleted_s = file_s.delete();
 
             // reading the iv
             File file_i = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "iv.enc");
@@ -40,8 +38,6 @@ public class AESDecrypt {
             byte[] iv = new byte[16];
             ivFis.read(iv);
             ivFis.close();
-            // delete enc file
-//            boolean deleted_i = file_i.delete();
 
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
@@ -51,10 +47,8 @@ public class AESDecrypt {
             // file decryption
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(iv));
-//            File file_e = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "encryptedfile.des");
+            File file_e = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "encryptedfile.des");
             FileInputStream fis = new FileInputStream(file_encrypted);
-            // delete des file
-//            boolean deleted_d = file_e.delete();
 
             FileOutputStream fos;
             File decryptfile = new File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "decrypted_file");
@@ -74,10 +68,15 @@ public class AESDecrypt {
             fos.flush();
             fos.close();
 
-//           // delete encrypted file
-//           new File("encryptedfile.des").delete();
             String mydecPath = path + "decrypted_file" + file_format;
             Toast.makeText(ctx, "Decrypted to " + mydecPath, Toast.LENGTH_LONG).show();
+
+            // delete salt file
+            boolean deleted_s = file_s.delete();
+            // delete iv file
+            boolean deleted_i = file_i.delete();
+            // delete encrypted file
+            boolean deleted_d = file_e.delete();
 
             // Error handling for user to see
         } catch(Exception e) {
