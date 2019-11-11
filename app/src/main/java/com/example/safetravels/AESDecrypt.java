@@ -75,8 +75,10 @@ public class AESDecrypt {
             boolean deleted_s = file_s.delete();
             // delete iv file
             boolean deleted_i = file_i.delete();
-            // delete encrypted file
-            boolean deleted_d = file_e.delete();
+            // delete encryption file
+            boolean deleted_encrypt = file_e.delete();
+
+
 
             // Error handling for user to see
         } catch(Exception e) {
