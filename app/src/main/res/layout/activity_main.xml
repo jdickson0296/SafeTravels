@@ -14,7 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="20dp"
-        android:text="Sedning Data" />
+        android:text="Sending Data" />
 
     <Button
         android:id="@+id/receieve_button"
