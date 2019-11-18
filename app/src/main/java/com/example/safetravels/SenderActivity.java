@@ -19,9 +19,7 @@ public class SenderActivity extends AppCompatActivity {
 
     // Initialize the buttons
     TextView enter_aes_s;
-    TextView enter_stegan_s;
     EditText AES_key_text_S;
-    EditText Stegan_key_text_S;
     Button Encrypt;
     Button upload;
     Button select_s;
@@ -40,16 +38,9 @@ public class SenderActivity extends AppCompatActivity {
         }
 
         enter_aes_s = (TextView) findViewById(R.id.enter_aes_s);
-        enter_stegan_s = (TextView) findViewById(R.id.enter_stegan_s);
         AES_key_text_S = (EditText) findViewById(R.id.aes_key_s);
-        Stegan_key_text_S = (EditText) findViewById(R.id.stegan_key_s);
         Encrypt = (Button) findViewById(R.id.encrypt_button);
-        upload = (Button) findViewById(R.id.upload_button);
         select_s =(Button) findViewById(R.id.select_button_s);
-
-
-        // get the stegan key from the text box
-        String stegan_key_s = String.valueOf(Stegan_key_text_S.getText());
 
         // function for when select is clicked
         select_s.setOnClickListener(new View.OnClickListener() {
@@ -75,14 +66,6 @@ public class SenderActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        });
-
-        // function for when upload is clicked
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 

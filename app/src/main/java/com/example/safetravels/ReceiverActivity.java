@@ -21,9 +21,7 @@ public class ReceiverActivity extends AppCompatActivity {
 
     // Initialize the buttons
     Button select;
-    TextView enter_stegan_r;
     TextView enter_aes_r;
-    EditText Stegan_key_text_R;
     EditText AES_key_text_R;
     Button decrypt;
     Spinner spinner1;
@@ -44,16 +42,10 @@ public class ReceiverActivity extends AppCompatActivity {
 
         // This finds your button on the activity
         select = (Button) findViewById(R.id.select_button);
-        Stegan_key_text_R = (EditText) findViewById(R.id.stegan_key_r);
         AES_key_text_R = (EditText) findViewById(R.id.aes_key_r);
-        enter_stegan_r = (TextView) findViewById(R.id.enter_stegan_r);
         enter_aes_r = (TextView) findViewById(R.id.enter_aes_r);
         decrypt = (Button) findViewById(R.id.decrypt_button);
         spinner1 = (Spinner) findViewById(R.id.spinner1);
-
-
-        // get the stegan key from the text box
-        String stegan_key_r = String.valueOf(Stegan_key_text_R.getText());
 
         // function for when select is clicked
         select.setOnClickListener(new View.OnClickListener() {
@@ -123,5 +115,4 @@ public class ReceiverActivity extends AppCompatActivity {
             }
         }
     }
-
 }
