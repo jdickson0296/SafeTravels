@@ -21,7 +21,6 @@ public class SenderActivity extends AppCompatActivity {
     TextView enter_aes_s;
     EditText AES_key_text_S;
     Button Encrypt;
-    Button upload;
     Button select_s;
 
     public static String filename;
